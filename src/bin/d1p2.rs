@@ -1,3 +1,7 @@
+//! Problem: <https://adventofcode.com/2021/day/1#part2>
+//!
+//! A solution using iterators.
+
 use aoc2021::IterExt;
 
 fn main() {
