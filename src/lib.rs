@@ -1,8 +1,6 @@
 use std::io::{self, BufRead};
 
-pub struct IterExt<I: Iterator> {
-    iter: I
-}
+pub struct IterExt<I: Iterator>(I);
 
 impl<T, I> IterExt<I> 
 where
@@ -10,12 +8,12 @@ where
     I: Iterator<Item = T>,
 {
     pub fn new(iter: I) -> IterExt<I> {
-        IterExt{iter: iter}
+        IterExt(iter)
     }
 
     pub fn with_prev(self) -> IterExt<impl Iterator<Item=(T, T)>> {
         let mut prev: Option<T> = None;
-        IterExt::new(self.iter.filter_map(move |x| {
+        IterExt::new(self.0.filter_map(move |x| {
             let result = prev.map(|prev| (prev, x));
             prev = Some(x);
             result
@@ -31,7 +29,7 @@ where
     type Item = T;
 
     fn next(&mut self) -> Option<T> {
-        self.iter.next()
+        self.0.next()
     }
 }
 
@@ -62,4 +60,3 @@ impl StdinParser {
         )
     }
 }
-
