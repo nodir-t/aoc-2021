@@ -1,4 +1,4 @@
-//! Problem: <https://adventofcode.com/2021/day/2#part1>
+//! Problem: <https://adventofcode.com/2021/day/2#part2>
 //!
 //! A solution using iterators.
 
@@ -17,6 +17,7 @@ fn run() -> aoc2021::Result<i32> {
 
     let mut x = 0;
     let mut y = 0;
+    let mut aim = 0;
 
     for line in stdin.lock().lines() {
         let line = line?;
@@ -26,9 +27,12 @@ fn run() -> aoc2021::Result<i32> {
             .ok_or_else(|| format!("expected two words in {:?}", &line))?;
         let dist: i32 = dist.parse()?;
         match cmd {
-            "forward" => x += dist,
-            "down" => y += dist,
-            "up" => y -= dist,
+            "down" => aim += dist,
+            "up" => aim -= dist,
+            "forward" => {
+                x += dist;
+                y += aim * dist;
+            }
             _ => return Err(From::from(format!("unexpected command {:?}", cmd))),
         }
     }
