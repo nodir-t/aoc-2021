@@ -2,15 +2,12 @@
 //!
 //! A solution using iterators.
 
-
 fn main() {
     let mut stdin = aoc2021::StdinParser::new();
-    let mut count = 0;
-    stdin.i32s().reduce(|x, y| {
-        if y > x {
-            count += 1
-        }
-        y
-    });
-    println!("{}", count);
+    println!("{}",     
+        stdin.i32s()
+            .with_prev()
+            .filter(|(x, y)| y > x)
+            .count()
+    );
 }
