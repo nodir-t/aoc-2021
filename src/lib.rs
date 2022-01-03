@@ -42,9 +42,7 @@ impl StdinParser {
     pub fn new() -> StdinParser {
         StdinParser{stdin: std::io::stdin()}
     }
-}
-
-impl StdinParser {
+    
     pub fn i32s<'a>(&'a mut self) -> IterExt<impl Iterator<Item=i32> + 'a> {
         self.seq::<i32>()
     }
