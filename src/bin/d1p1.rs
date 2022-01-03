@@ -1,16 +1,16 @@
 //! Problem: <https://adventofcode.com/2021/day/1#part1>
 //!
-//! A solution using iterator folding.
+//! A solution using iterators.
 
-use std::io::{self, BufRead};
 
 fn main() {
-    let stdin = io::stdin();
-    let mut iter = stdin.lock().lines()
-        .map(|s| s.unwrap().trim().parse().expect("not a number"));
-    let first: i32 = iter.next().expect("Expected at least one number");
-    let (count, _) = iter.fold((0, first), |(count, prev), x| {
-        (count + (if x > prev {1} else {0}), x)
+    let mut stdin = aoc2021::StdinParser::new();
+    let mut count = 0;
+    stdin.i32s().reduce(|x, y| {
+        if y > x {
+            count += 1
+        }
+        y
     });
     println!("{}", count);
 }
