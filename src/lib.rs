@@ -1,5 +1,7 @@
 use std::io::{self, BufRead};
 
+pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
+
 pub struct IterExt<I: Iterator>(I);
 
 impl<T, I> IterExt<I> 
