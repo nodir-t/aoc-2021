@@ -48,11 +48,18 @@ impl StdinParser {
 
 impl StdinParser {
     pub fn i32s<'a>(&'a mut self) -> IterExt<impl Iterator<Item=i32> + 'a> {
+        self.seq::<i32>()
+    }
+
+    pub fn seq<'a, T>(&'a mut self) -> IterExt<impl Iterator<Item=T> + 'a>
+    where
+        T: std::str::FromStr + Copy,
+        T::Err: std::fmt::Debug,
+    {
         IterExt::new(
             self.stdin.lock().lines()
-            .map(|s| s.unwrap().trim().parse::<i32>().expect("failed to parse item"))
+            .map(|s| s.unwrap().trim().parse::<T>().expect("failed to parse item"))
         )
     }
 }
-
 
